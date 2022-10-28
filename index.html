@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- CSS only -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+
+<body>
+    <div class="container">
+        <div class="getInput">
+            <button class="addBtn m-2">Add</button>
+            <button class="sort-by-date">Sort by date</button>
+            <button class="sort-by-name">Sort by name</button>
+            <button class="quantity-color">Show color by quantity</button>
+            <button class="date-color">Show color by deadline</button>
+            <button class="show-all">Show all</button>
+            <button class="filter-finished m-2">Filter finished</button>
+            <button class="filter-unfinished m-2">Filter unfinished</button>
+        </div>
+        <!-- <p class="status"></p> -->
+        <div class="displayField">
+            <div class="item">
+                <table class="table">
+                    <tr>
+                        <th>id</th>
+                        <th>name</th>
+                        <th>date</th>
+                        <th>quantity</th>
+                        <th>action
+                            <!-- <div>
+                                <button class="update-btn">Update </button>
+                                <button class="del-btn">Delete</button>
+                            </div> -->
+                        </th>
+                    </tr>
+                </table>
+            </div>
+            <p class="msg"></p>
+        </div>
+    </div>
+    <div id="delModal" class="delModal">
+
+        <!-- Modal content -->
+        <div class="del-modal-content">
+            <span class="close1">&times;</span>
+            <p>confirmed delete item</p>
+            <button class="confirm-del">Confirm</button>
+        </div>
+
+    </div>
+    <div id="updateModal" class="updateModal">
+
+        <!-- Modal content -->
+        <div class="update-modal-content">
+            <span class="close2">&times;</span>
+            <div class="update-modal-body">
+                <div class="left">
+                    <p class="oldId">id</p>
+                    <p class="oldName">name</p>
+                    <p class="oldDate">date</p>
+                    <p class="oldQuantity">quantity</p>
+                </div>
+                <div class="right">
+                    <input class="newId" placeholder="new id" type="number">
+                    <input class="newName" placeholder="new name" type="text">
+                    <input class="newDate" placeholder="new date" type="date">
+                    <input class="newQuantity" placeholder="new quantity" type="number">
+                </div>
+            </div>
+            <button class="confirm-update">Confirm</button>
+        </div>
+
+    </div>
+</body>
+<script src="script.js"></script>
+
+</html>
