@@ -14,19 +14,9 @@ span {
   margin-right: 20px;
 }
 
-.container {
-  width: 500px;
-  display: flex;
-  flex-direction: column;
-}
+
 .getInput {
-  /* height: 50px; */
-  /* display: flex; */
-  flex-direction: row;
-  justify-content: space-between;
   padding: 5px;
-  /* flex-wrap: wrap; */
-  /* margin: 30px; */
 }
 
 .item {
@@ -36,9 +26,6 @@ span {
 }
 .active {
   background-color: green;
-}
-.action-cell {
-  display: flex;
 }
 
 .delModal,
@@ -106,6 +93,22 @@ span {
   flex-direction: column;
 }
 
-.newId, .newName, .newDate{
+.newId,
+.newName,
+.newDate {
   margin-bottom: 10px;
+}
+
+.search-field {
+  width: fit-content;
+  block-size: fit-content;
+  /* display: flex; */
+}
+.search-container {
+  display: flex;
+  justify-content: center;
+}
+.add-btn, .search-btn {
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
 }

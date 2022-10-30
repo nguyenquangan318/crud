@@ -18,14 +18,27 @@
 <body>
     <div class="container">
         <div class="getInput">
-            <button class="addBtn m-2">Add</button>
-            <button class="sort-by-date">Sort by date</button>
-            <button class="sort-by-name">Sort by name</button>
-            <button class="quantity-color">Show color by quantity</button>
-            <button class="date-color">Show color by deadline</button>
-            <button class="show-all">Show all</button>
-            <button class="filter-finished m-2">Filter finished</button>
-            <button class="filter-unfinished m-2">Filter unfinished</button>
+            <!-- <button class="sort-by-date m-2">Sort by date</button>
+            <button class="sort-by-name m-2">Sort by name</button> -->
+            <button class="quantity-color m-2 btn btn-primary">Show color by quantity</button>
+            <button class="date-color m-2 btn btn-primary">Show color by deadline</button>
+            <button class="show-all m-2 btn btn-primary">Show all</button>
+            <button class="filter-finished m-2 btn btn-primary">Filter finished</button>
+            <button class="filter-unfinished m-2 btn btn-primary">Filter unfinished</button>
+        </div>
+        <div class="add-container m-2">
+            <input class="id" type="number">
+            <input class="name" type="text">
+            <input class="date" type="date">
+            <input class="quantity" type="number">
+            <button class="add-btn btn-success ml-2">add</button>
+
+        </div>
+        <div class="search-container">
+            <div class="search-field ">
+                <input class="search-input" type="text" placeholder="Search by name">
+                <button class="search-btn btn-secondary">Search</button>
+            </div>
         </div>
         <!-- <p class="status"></p> -->
         <div class="displayField">
@@ -36,7 +49,7 @@
                         <th>name</th>
                         <th>date</th>
                         <th>quantity</th>
-                        <th>action
+                        <th style="width: 220 px;">action
                             <!-- <div>
                                 <button class="update-btn">Update </button>
                                 <button class="del-btn">Delete</button>
@@ -53,8 +66,13 @@
         <!-- Modal content -->
         <div class="del-modal-content">
             <span class="close1">&times;</span>
-            <p>confirmed delete item</p>
-            <button class="confirm-del">Confirm</button>
+            <div>
+                <p style="text-align: center;">confirmed delete item</p>
+                <div style="text-align: center;">
+                    <button class="confirm-del btn btn-danger">Confirm</button>
+                </div>
+            </div>
+
         </div>
 
     </div>
@@ -65,19 +83,24 @@
             <span class="close2">&times;</span>
             <div class="update-modal-body">
                 <div class="left">
-                    <p class="oldId">id</p>
-                    <p class="oldName">name</p>
-                    <p class="oldDate">date</p>
-                    <p class="oldQuantity">quantity</p>
+                    <p>Old item</p>
+                    <p>Id: <span class="oldId">id</span></p>
+                    <p>Name: <span class="oldName">id</span></p>
+                    <p>Date: <span class="oldDate">id</span></p>
+                    <p>Quantity: <span class="oldQuantity">id</span></p>
                 </div>
                 <div class="right">
+                    <p>Updated item</p>
                     <input class="newId" placeholder="new id" type="number">
                     <input class="newName" placeholder="new name" type="text">
                     <input class="newDate" placeholder="new date" type="date">
                     <input class="newQuantity" placeholder="new quantity" type="number">
                 </div>
             </div>
-            <button class="confirm-update">Confirm</button>
+            <div style="text-align: center;">
+                <button class="confirm-update btn btn-success">Confirm</button>
+            </div>
+
         </div>
 
     </div>

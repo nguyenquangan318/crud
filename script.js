@@ -1,73 +1,31 @@
-let table = document.querySelector("tbody");
-let count = 0;
 let today = new Date();
-let data = [
-  // {
-  //   id: 0,
-  //   name: "sp1",
-  //   date: "2022-10-27",
-  //   quantity: "2",
-  //   color: "",
-  // },
-  // {
-  //   id: 1,
-  //   name: "sp2",
-  //   date: "2022-10-29",
-  //   quantity: "0",
-  //   color: "",
-  // },
-  // {
-  //   id: 2,
-  //   name: "sp3",
-  //   date: "2022-11-27",
-  //   quantity: "2",
-  //   color: "",
-  // },
-];
+let data = [];
 function generateDOM(data) {
-  // console.log(data);
-  table.innerHTML = `                    <tr>
+  $(".table").html(`<tr>
   <th>id</th>
   <th>name</th>
   <th>date</th>
   <th>quantity</th>
   <th>action
-      <!-- <div>
-          <button class="update-btn">Update </button>
-          <button class="del-btn">Delete</button>
-      </div> -->
   </th>
-</tr> `;
+</tr> `);
   for (let i in data) {
-    var row = table.insertRow(-1);
-    var cell0 = row.insertCell(0);
-    var cell1 = row.insertCell(1);
-    var cell2 = row.insertCell(2);
-    var cell3 = row.insertCell(3);
-    var cell4 = row.insertCell(4);
-    cell0.style.background = `${data[i].color}`;
-    cell1.style.background = `${data[i].color}`;
-    cell2.style.background = `${data[i].color}`;
-    cell3.style.background = `${data[i].color}`;
-    cell4.style.background = `${data[i].color}`;
-    cell0.innerHTML = `${data[i].id}`;
-    cell1.innerHTML = `${data[i].name}`;
-    cell2.innerHTML = `${data[i].date}`;
-    cell3.innerHTML = `${data[i].quantity}`;
-    cell4.innerHTML = `<div class ="action-cell">
-        <button class="update-btn">Update</button>
-        <button class="del-btn">Delete</button>
-    </div>`;
+    let tr = $(`<tr>
+    <td style = "background-color:${data[i].color}">${data[i].id}</td>
+    <td style = "background-color:${data[i].color}">${data[i].name}</td>
+    <td style = "background-color:${data[i].color}">${data[i].date}</td>
+    <td style = "background-color:${data[i].color}">${data[i].quantity}</td>
+    <td style = "background-color:${data[i].color};width:220px">
+    <button class="update-btn btn btn-success mr-2">Update</button>
+    <button class="del-btn btn btn btn-danger ">Delete</button>
+    </td>
+    </tr>`);
+    $(".table").append(tr);
   }
 }
 
 function saveToLocal(data) {
-  localStorage.clear();
-  for (let i in data) {
-    // let id = String(data[i.id]);
-    let key = `product${data[i].id}`;
-    localStorage.setItem(key, JSON.stringify(data[i]));
-  }
+  localStorage.setItem("products", JSON.stringify(data));
 }
 
 function checkEmpty(data) {
@@ -78,94 +36,59 @@ function checkEmpty(data) {
   }
 }
 
-function getData() {
-  data = [];
-  for (let key in localStorage) {
-    if (key.includes("product")) {
-      data.push(JSON.parse(localStorage.getItem(key)));
+function validateData(id, name, date, quantity, product, filterData) {
+  if (id === "" || name === "" || date === "" || quantity === "") {
+    alert("data must not be blank");
+    return false;
+  }
+  if (name.length < 6) {
+    alert("name must have length bigger than 6");
+    return false;
+  }
+  if (quantity < 0) {
+    alert("quantity must be bigger than 0");
+    return false;
+  }
+  for (let i in filterData) {
+    if (filterData[i].id === product.id) {
+      alert("id must be unique");
+      return false;
     }
   }
+  return true;
 }
+
 function loadData() {
+  data = JSON.parse(localStorage.getItem("products")) || [];
+  localStorage.setItem("products", JSON.stringify(data));
   checkEmpty(data);
-  for (let i in data) {
-    // let id = String(data[i.id]);
-    let key = `product${data[i].id}`;
-    localStorage.setItem(key, JSON.stringify(data[i]));
-  }
-  getData();
-  checkEmpty(data);
-  saveToLocal(data);
   generateDOM(data);
-  // let xhr = new XMLHttpRequest();
-  // xhr.open("GET", "data.json", true);
-  // xhr.onload = function () {
-  //   if (this.status === 200) {
-  //     console.log(this.responseText);
-  //     try {
-  //       data = JSON.parse(this.responseText);
-  //     } catch (e) {
-  //       table.append("there is no product");
-  //       return;
-  //     }
-  //     generateDOM(data);
-  //   }
-  // };
-  // xhr.send();
 }
-
 loadData();
-$(".addBtn").click(() => {
-  if (count != 0) {
-    table.deleteRow(0);
-    count = 0;
-    return;
-  }
-  count = 1;
-  var row = table.insertRow(0);
-  var cell0 = row.insertCell(0);
-  var cell1 = row.insertCell(1);
-  var cell2 = row.insertCell(2);
-  var cell3 = row.insertCell(3);
-  var cell4 = row.insertCell(4);
-  cell0.innerHTML = `<input class="id" type="number">`;
-  cell1.innerHTML = `<input class="name" type="text">`;
-  cell2.innerHTML = `<input class="date" type="date">`;
-  cell3.innerHTML = `<input class="quantity" type="number">`;
-  cell4.innerHTML = `<button class="add-btn">add</button>`;
-});
 
-$(document).on("click", ".add-btn", function () {
-  count = 0;
+$(".add-btn").on("click", function () {
   let id = $(".id").val();
   let name = $(".name").val();
   let date = $(".date").val();
   let quantity = $(".quantity").val();
-  if (id === "" || name === "" || date === "" || quantity === "") {
-    alert("data must not be blank");
-  } else if (name.length < 6) {
-    alert("name must have length bigger than 6");
-  } else if (quantity < 0) {
-    alert("quantity must be bigger than 0");
-  } else {
-    let addedProduct = {
-      id: Number(id),
-      name: name.trim(),
-      date: date,
-      quantity: quantity,
-      color: "",
-    };
-    for (let i in data) {
-      if (data[i].id === addedProduct.id) {
-        alert("id must be unique");
-        count = 0;
-        return;
-      }
-    }
+  let addedProduct = {
+    id: Number(id),
+    name: name.trim(),
+    date: date,
+    quantity: quantity,
+    color: "",
+  };
+  let check = validateData(id, name, date, quantity, addedProduct, data);
+  if (check) {
+    // console.log(data);
     data.push(addedProduct);
     saveToLocal(data);
     generateDOM(data);
     checkEmpty(data);
+    $(".id").val("");
+    $(".name").val("");
+    $(".date").val("");
+    $(".quantity").val("");
   }
 });
 
@@ -218,26 +141,21 @@ $(document).on("click", ".date-color", function () {
 });
 
 $(document).on("click", ".filter-finished ", function () {
-  getData();
   let filteredData = data.filter((data) => {
     return new Date(data.date) < today;
   });
-  data = filteredData;
-  checkEmpty(data);
-  generateDOM(data);
+  checkEmpty(filteredData);
+  generateDOM(filteredData);
 });
 $(document).on("click", ".filter-unfinished ", function () {
-  getData();
   let filtereddata = data.filter((data) => {
     return new Date(data.date) >= today;
   });
-  data = filtereddata;
-  checkEmpty(data);
-  generateDOM(data);
+  checkEmpty(filtereddata);
+  generateDOM(filtereddata);
 });
 
-$(document).on("click", ".show-all", function () {
-  getData();
+$(".show-all").on("click", function () {
   checkEmpty(data);
   for (let i in data) {
     data[i].color = "";
@@ -246,53 +164,40 @@ $(document).on("click", ".show-all", function () {
 });
 
 $(document).on("click", ".update-btn", function () {
-  let updateId = $("td:first", $(this).parents("tr")).text();
-  let check = true;
+  console.log(data);
+  let updateId = parseInt($("td:first", $(this).parents("tr")).text());
+  let checkId = true;
   let checkedData = data.filter((data) => {
     return data.id != updateId;
   });
-  for (let i in data) {
-    if (data[i].id == updateId) {
-      $(".oldId").text(`${data[i].id}`);
-      $(".oldName").text(`${data[i].name}`);
-      $(".oldDate").text(`${data[i].date}`);
-      $(".oldQuantity").text(`${data[i].quantity}`);
-    }
-  }
+  let oldProduct = data.find((product) => product.id == updateId);
+  console.log(oldProduct, updateId);
+      $(".oldId").text(`${oldProduct.id}`);
+      $(".oldName").text(`${oldProduct.name}`);
+      $(".oldDate").text(`${oldProduct.date}`);
+      $(".oldQuantity").text(`${oldProduct.quantity}`);
   $(".updateModal").css("display", "block");
   $(".close2").on("click", () => {
     $(".updateModal").css("display", "none");
   });
+  $(".confirm-update").unbind("click");
   $(".confirm-update").on("click", () => {
-    let newId = parseInt($(".newId").val());
+    let newId = $(".newId").val();
     let newName = $(".newName").val();
     let newDate = $(".newDate").val();
-    let newQuantity = parseInt($(".newQuantity").val());
-    // console.log(typeof newId);
+    let newQuantity = $(".newQuantity").val();
     for (let i in checkedData) {
       if (newId == checkedData[i].id) {
-        check = false;
+        checkId = false;
       }
     }
-    if (
-      newId === "" ||
-      newName === "" ||
-      newDate === "" ||
-      newQuantity === ""
-    ) {
-      alert("data must not be blank");
-      return;
-    } else if (newName.length < 6) {
-      alert("name must have length bigger than 6");
-      return;
-    } else if (newQuantity < 0) {
-      alert("quantity must be bigger than 0");
-      return;
-    } else if (check == false) {
-      alert("New id must be unique");
-      check = true;
-      return;
-    } else {
+    let check = validateData(newId, newName, newDate, newQuantity);
+    if (check) {
+      if (checkId == false) {
+        alert("New id must be unique");
+        checkId = true;
+        return;
+      }
       for (let i in data) {
         if (data[i].id == updateId) {
           data[i].id = newId;
@@ -302,11 +207,11 @@ $(document).on("click", ".update-btn", function () {
           data[i].color = "";
         }
       }
+      saveToLocal(data);
+      checkEmpty(data);
+      generateDOM(data);
+      $(".updateModal").css("display", "none");
     }
-    saveToLocal(data);
-    checkEmpty(data);
-    generateDOM(data);
-    $(".updateModal").css("display", "none");
   });
   // This will work!
 });
@@ -317,7 +222,9 @@ $(document).on("click", ".del-btn", function () {
   $(".close1").on("click", () => {
     $(".delModal").css("display", "none");
   });
+  $(".confirm-del").unbind("click");
   $(".confirm-del").on("click", () => {
+    console.log("a");
     for (let i in data) {
       if (data[i].id == delId) {
         data.splice(i, 1);
